@@ -1,0 +1,8 @@
+excerpt_separator: ""
+pygments: true
+markdown: kramdown
+url: http://AdrianAtHumboldt.github.io
+title: Adrian Cox
+tagline: Building Software
+description: Things that broke, and things I fixed.
+paginate: 5
