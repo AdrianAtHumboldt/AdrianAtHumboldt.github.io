@@ -7,14 +7,14 @@ We have a monolith. It's not the biggest monolith, but it does contain a lot of 
 
 Our monolith is a web application, and uses an embedded Jetty server. It also uses Jasper reports, compiling `jrxml` files on demand. This week, our builds stopped compiling reports, with an exception that Jasper could not find `javac`. The first thought was that somebody had changed the server install from a JDK to a JRE, leaving the compiler unavailable. But after installing the latest JDK, and checking the system path, the error changed:
 
-{% highlight %}
+```
 net.sf.jasperreports.engine.JRException: Errors were encountered when compiling report expressions class file:
 C:\Users\adrian\Workspaces\Customer\App\App-Web\j491845presale_seller_1464295746680_612367.java:227: error: cannot find symbol
                 value = DATEFORMAT(((java.sql.Timestamp)field_sale_start.getValue()), "dd/MM/YYYY"); //$JR_EXPR_ID=2$
                         ^
   symbol:   method DATEFORMAT(Timestamp,String)
   location: class j491845presale_seller_1464295746680_612367
-{% endhighlight %}
+```
 
 As `jasperreports-functions-5.6.1.jar` was in the classpath, there was clearly another problem.  Why was Jasper searching for `javac` at all, when Eclipse JDT was available?
 
