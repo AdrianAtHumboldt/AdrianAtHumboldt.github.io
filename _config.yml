@@ -6,3 +6,5 @@ title: Adrian Cox
 tagline: Building Software
 description: Things that broke, and things I fixed.
 paginate: 5
+gems:
+  - jekyll-sitemap
