@@ -1,4 +1,4 @@
-excerpt_separator: ""
+excerpt_separator: <!--more-->
 highlighter: rouge
 markdown: kramdown
 url: https://AdrianAtHumboldt.github.io
