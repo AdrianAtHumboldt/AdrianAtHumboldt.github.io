@@ -12,7 +12,7 @@ com.amazonaws.services.s3.model.AmazonS3Exception: AWS authentication requires a
 The real problem was that we had many dependencies on different versions of Joda Time, and AWS had lost the battle - we were actually running Joda Time 2.0. 
 
 It was time to stop this happening again, with the [Maven Enforcer Plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/). It's possible to fail the build if we ever reference two versions of the same dependency:
-
+<!--more-->
 {% highlight xml%}
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
