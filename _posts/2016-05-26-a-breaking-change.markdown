@@ -2,7 +2,7 @@
 published: true
 title: A Breaking Change
 layout: post
-categories: [java]
+tags: [java]
 ---
 We have a monolith. It's not the biggest monolith, but it does contain a lot of Java libraries, managed with Maven. This week an upgrade to one package caused a distant side effect.
 
