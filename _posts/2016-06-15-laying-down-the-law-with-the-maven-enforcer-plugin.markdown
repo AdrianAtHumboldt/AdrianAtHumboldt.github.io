@@ -2,6 +2,7 @@
 published: true
 title: Laying down the law with the Maven Enforcer Plugin
 layout: post
+categories: [java]
 ---
 We recently moved an application to a new server, with an updated installation of Java 8. It didn't take long to discover that Amazon S3 accesses were failing with an authentication error, and it didn't take much longer to discover that this problem was [already fixed in the version of the AWS Java SDK](https://github.com/aws/aws-sdk-java/issues/484) we were using.
 
