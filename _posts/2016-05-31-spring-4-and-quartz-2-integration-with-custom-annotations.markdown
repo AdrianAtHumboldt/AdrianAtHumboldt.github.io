@@ -2,6 +2,7 @@
 published: true
 title: Spring 4 and Quartz 2 Integration with Custom Annotations
 layout: post
+categories: [java]
 ---
 I'm integrating Quartz scheduling into an application, and was looking for an annotation based approach to configuration.  I quickly found [the SivaLabs implementation](http://sivalabs.in/2011/10/spring-and-quartz-integration-using-custom-annotation/), which works for Quartz 1.8. I've made a few changes to use this with Spring 4.1.4 and Quartz 2.2.3.
 
