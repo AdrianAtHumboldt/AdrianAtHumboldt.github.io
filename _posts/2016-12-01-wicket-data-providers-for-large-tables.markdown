@@ -11,7 +11,7 @@ Apache Wicket provides the [AjaxFallbackDefaultDataTable](https://ci.apache.org/
 * Fetch a count of rows that match the search parameters
 * Provide an iterator over a subset of rows that match the search parameter, ordered by the current sort.
 
-If your sorting need can be satisfied by sorting on a single column at any time, the best approach is to extend the abstract class [SortableDataProvider](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/markup/html/repeater/util/SortableDataProvider.html), which handles all the work involved in tracking the single sort property.
+If you are satisfied with sorting on a single column at any time, the best approach is to extend the abstract class [SortableDataProvider](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/markup/html/repeater/util/SortableDataProvider.html), which handles all the work involved in tracking the single sort property.
 
 As the data provider must be `Serializable`, it cannot reference the database directly,  but must find a database connection via some type of service locator. I've used [Wicket-Spring](https://ci.apache.org/projects/wicket/guide/8.x/single.html#_integrating_wicket_with_spring) to inject a repository object that provides interfaces that map closely to the `ISortableDataProvider` interface, and to leave all search and sorting logic to the repository. A single instance of the repository object can be shared between many data providers, so the search and sorting parameters have to be passed in with every request:
 
@@ -36,7 +36,6 @@ public class ClientSearchBackend  {
 The data provider is then only responsible for passing parameters to the repository. Note that this particular data provider returns a `Serializable` summary object which can be stored directly in a model. 
 
 {% highlight java %}
-
 public class ClientSearchProvider extends SortableDataProvider<ClientData, String> {
 
     private final ClientSearchParams filter = new ClientSearchParams ();
@@ -77,3 +76,36 @@ public class ClientSearchProvider extends SortableDataProvider<ClientData, Strin
 {% endhighlight %}
 
 While the data provider could access a database connection directly via `@SpringBean`, this would make unit test of pages containing the data provider extremely difficult. Instead, unit tests can simply mock `ClientSearchBackend ` and return fake data for the `count` and `list` calls.
+
+For completeness, the Kotlin version of the data provider looks like this. Mostly similar, but handling the possibility of a null `sort` property is less verbose:
+
+
+{% highlight kotlin %}
+class ClientExtendedDataProvider : SortableDataProvider<ClientData, String>() {
+
+    @SpringBean
+    private val backend: ClientExtendedBackend? = null
+
+    val filter = ClientExtendedFilter()
+
+    init {
+        Injector.get().inject(this)
+        setSort("accountNumber", SortOrder.ASCENDING)
+    }
+
+    override fun iterator(first: Long, count: Long): Iterator<ClientData > {
+        return backend!!.list(first, count, filter,
+                sort?.property ?: "accountNumber",
+                sort?.isAscending() ?: true)
+                .iterator()
+    }
+
+    override fun size(): Long {
+        return backend!!.count(filter)
+    }
+
+    override fun model(clientData: ClientData ): IModel<ClientData > {
+        return Model(clientData)
+    }
+}
+{% endhighlight %}
