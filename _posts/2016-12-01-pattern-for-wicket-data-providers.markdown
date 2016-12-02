@@ -1,19 +1,21 @@
 ---
-published: false
+published: true
 title: A Pattern for Wicket Data Providers
 layout: post
 tags: [java]
 ---
-Apache Wicket provides the [AjaxFallbackDefaultDataTable](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/ajax/markup/html/repeater/data/table/AjaxFallbackDefaultDataTable.html) for displaying a paged view of a large data set, and this component requires an implementation of [ISortableDataProvider](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/markup/html/repeater/data/table/ISortableDataProvider.html) to populate the rows. This data provider has several responsibilities:
+Apache Wicket provides the [AjaxFallbackDefaultDataTable](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/ajax/markup/html/repeater/data/table/AjaxFallbackDefaultDataTable.html)[^1] for displaying a paged view of a large data set, and this component requires an implementation of [ISortableDataProvider](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/markup/html/repeater/data/table/ISortableDataProvider.html) to populate the rows. This data provider has several responsibilities:
 
 * Keep track of the current sort order.
 * Store any search parameters in a `Serializable` form.
 * Fetch a count of rows that match the search parameters
 * Provide an iterator over a subset of rows that match the search parameter, ordered by the current sort.
 
+<!--more-->
+
 If you are satisfied with sorting on a single column at any time, the best approach is to extend the abstract class [SortableDataProvider](https://ci.apache.org/projects/wicket/apidocs/8.x/org/apache/wicket/extensions/markup/html/repeater/util/SortableDataProvider.html), which handles all the work involved in tracking the single sort property. 
 
-As the data provider must be `Serializable`, it cannot reference the database directly,  but must find a database connection via some type of service locator. I've used [Wicket-Spring](https://ci.apache.org/projects/wicket/guide/8.x/single.html#_integrating_wicket_with_spring) to inject a repository object that provides interfaces that map closely to the `ISortableDataProvider` interface, and to leave all search and sorting logic to the repository. A single instance of the repository object can be shared between many data providers, so the search and sorting parameters have to be passed in with every request:
+As the data provider must be `Serializable`, it cannot reference the database directly,  but must find a database connection via some type of service locator. I've used [Wicket-Spring](https://ci.apache.org/projects/wicket/guide/8.x/single.html#_integrating_wicket_with_spring) to inject a repository object that handles all search and sorting logic. A single instance of the repository object can be shared between many data providers, so the search and sorting parameters have to be passed in with every request:
 
 {% highlight java %}
 @Component
@@ -33,7 +35,7 @@ public class ClientSearchBackend  {
 }
 {% endhighlight %}
 
-The data provider is then only responsible for passing parameters to the repository. Note that this particular data provider returns a `Serializable` summary object which can be stored directly in a model.  More complex return types might benefit from wrapping the data in a `LoadableDetachableModel`.
+The data provider is then only responsible for passing parameters to the repository. `ClientSearchParams` is a serializable bean class with get and set methods for each search field. Note that the `ClientData` returned from this data provider is `Serializable` and small, so can be stored directly in a model.  More complex return types might benefit from wrapping the data in a `LoadableDetachableModel`.
 
 {% highlight java %}
 public class ClientSearchProvider extends SortableDataProvider<ClientData, String> {
@@ -109,3 +111,5 @@ class ClientExtendedDataProvider : SortableDataProvider<ClientData, String>() {
     }
 }
 {% endhighlight %}
+
+[^1]: Other [repeating views](https://ci.apache.org/projects/wicket/guide/8.x/single.html#_displaying_multiple_items_with_repeaters) are available.
