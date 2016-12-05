@@ -41,3 +41,6 @@ WebAppContext wac = new WebAppContext();
 // so that Jasper Reports can load ECJ
 wac.setClassLoader(ClassLoader.getSystemClassLoader());
 {% endhighlight %}
+
+Originally published by [Adrian Cox](https://twitter.com/_a_d_r_1_a_n_) at 
+[https://adrianathumboldt.github.io/](https://twitter.com/_a_d_r_1_a_n_).
