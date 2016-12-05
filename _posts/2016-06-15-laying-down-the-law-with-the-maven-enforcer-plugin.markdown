@@ -127,3 +127,6 @@ In fact, Jasper Reports was by far the worst offender in our code base, due to t
             <version>2.1.7</version>
         </dependency>
 {% endhighlight %}
+
+Originally published by [Adrian Cox](https://twitter.com/_a_d_r_1_a_n_) at 
+[https://adrianathumboldt.github.io/](https://twitter.com/_a_d_r_1_a_n_).
