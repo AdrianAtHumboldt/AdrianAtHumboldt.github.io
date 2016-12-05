@@ -101,3 +101,6 @@ At this point jobs are automatically configured as long they:
 * are in a package scanned by Spring, and by the `QuartzJobScanner`
 
 [Full code here.](https://gist.github.com/AdrianAtHumboldt/0885a39be05ceea8501b6661bbe8335d)
+
+Originally published by [Adrian Cox](https://twitter.com/_a_d_r_1_a_n_) at 
+[https://adrianathumboldt.github.io/](https://twitter.com/_a_d_r_1_a_n_).
