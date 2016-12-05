@@ -112,4 +112,7 @@ class ClientExtendedDataProvider : SortableDataProvider<ClientData, String>() {
 }
 {% endhighlight %}
 
+Originally published by [Adrian Cox](https://twitter.com/_a_d_r_1_a_n_) at 
+[https://adrianathumboldt.github.io/](https://twitter.com/_a_d_r_1_a_n_).
+
 [^1]: Other [repeating views](https://ci.apache.org/projects/wicket/guide/8.x/single.html#_displaying_multiple_items_with_repeaters) are available.
