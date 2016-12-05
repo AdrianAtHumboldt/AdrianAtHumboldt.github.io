@@ -14,3 +14,6 @@ The modern alternative is WebRTC, which provides browser APIs to set up an [RTP 
  Unfortunately [support is currently limited to Firefox, Chrome, and Opera](http://caniuse.com/#search=webrtc).  Which means that the near future looks like a mixed world, with RTMP streaming to the Flash plugin in IE and Edge with WebRTC to Chrome and Firefox.
 
 And iOS? WebRTC is marked as ["in development" for WebKit](https://webkit.org/status/#specification-webrtc), but we don't know when, or whether this will be available on iOS Safari. Until then Apple doesn't support any low-latency protocol in their web browser, so there's no alternative to an app for that.
+
+Originally published by [Adrian Cox](https://twitter.com/_a_d_r_1_a_n_) at 
+[https://adrianathumboldt.github.io/](https://twitter.com/_a_d_r_1_a_n_).
